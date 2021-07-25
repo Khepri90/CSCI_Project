@@ -4,6 +4,8 @@
 
 
 #include "Library.h"
+
+#include "regex"
 using namespace std;
 template<class ItemType>
 Library<ItemType>::Library() { //Default constructor
@@ -12,7 +14,14 @@ Library<ItemType>::Library() { //Default constructor
 
 template<class ItemType>
 Library<ItemType>::~Library() { //Default deconstructor
+    vector<shared_ptr<Book>> vecBooks = books->toVector();
+    /* getting error for no toVector in linked list with patrons
+    vector<shared_ptr<Patron>> vecPatron = patrons->toVector();
+     */
 
+    for (const shared_ptr<Book>& aBook: vecBooks){
+        books->remove(aBook);
+    }
 }
 
 
@@ -29,12 +38,16 @@ bool Library<ItemType>::removeBook(string title) { //remove available books from
 
 template<class ItemType>
 bool Library<ItemType>::addPatron(string name, string address, string phoneNum) {
-    return false;
+    Patron newPatron = Patron(name, address, phoneNum);
+    return(this->patrons.add(newPatron));
 }
 
 template<class ItemType>
 bool Library<ItemType>::isAvailable(string title) {
-    return false;
+    for(Book aBook: this->books.toVector())
+        if(aBook.getTitle() == title)
+            return true;
+
 }
 
 template<class ItemType>
@@ -44,17 +57,22 @@ bool Library<ItemType>::isCheckedOut(string title) {
 
 template<class ItemType>
 bool Library<ItemType>::addBook(const string &aTitle, const string &aIsbn, const string &aDatePublished,
-                                const string &aPublisher, const string &aNumOfPages) {
-    return false;
+
+                               const string &aPublisher, const string &aNumOfPages) {
+    Book newBook = Book(aTitle, aIsbn, aDatePublished, aPublisher, aNumOfPages);
+    this->books.add(newBook)
+    bookIndex->add(newBook);
 }
 
 template<class ItemType>
 void Library<ItemType>::checkout(string phoneNum, string title) {
+   /*
     bool canCheckout = isAvailable(title);
     if (canCheckout){
 
 
     }
+    */
 }
 
 template<class ItemType>
@@ -110,6 +128,23 @@ void Library<ItemType>::listCheckedOut() {
 
 template<class ItemType>
 void Library<ItemType>::listPatrons() {
+    cout << string(57, '=') << endl;
+    cout <<
+         setw(10) << "Name" << " -- " <<
+         setw(10) << "Address" << " -- " <<
+         setw(10) << "Phone Number" << " -- " << endl;
+    cout << string(57, '=') << endl;
+    int length = patrons->getLength();
+    for(int i = 0; i < length; i++){
+        cout << string(57, '=') << endl;
+        cout <<
+             setw(10) << patrons->getEntry(i)->getName() << " -- " <<
+             setw(10) << patrons->getEntry(i)->getAddress()<< " -- " <<
+             setw(10) << patrons->getEntry(i)->getPhoneNumber() << " -- " << endl;
+        cout << string(57, '=') << endl;
+
+
+    }
 
 }
 
@@ -125,5 +160,21 @@ void Library<ItemType>::saveFile() {
 
 template<class ItemType>
 vector<shared_ptr<Book>> Library<ItemType>::search(string title) {
-    return vector<shared_ptr<Book>>();
+    vector<shared_ptr<Book>> foundBooks;
+    string searchTitle = ".*"+title+".*";
+
+    transform(searchTitle.begin(), searchTitle.end(), searchTitle.begin(), ::toupper);
+    const regex txt_regex(searchTitle);
+
+    vector<shared_ptr<Book>> bookVector = this->books->toVector();
+    for (int i=0; i < this->books->getCurrentSize(); i++){
+        string bookTitle = bookVector[i]->getTitle();
+        transform(bookTitle.begin(), bookTitle.end(), bookTitle.begin(), ::toupper);
+
+        if (regex_match(bookTitle, txt_regex)){
+            foundBooks.push_back(bookVector[i]);
+        }
+    }
+    return foundBooks;
+    //return vector<shared_ptr<Book>>();
 }

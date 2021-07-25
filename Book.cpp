@@ -78,6 +78,14 @@ void Book::setPatron(shared_ptr<Patron> aPatron) {
 }
 
 bool Book::isChecked() {
+    /*search title
+    if not available, then checked out*/
+    bool checked = false;
+    if(currentPatron != nullptr){
+        checked = true;
+    }
+
+    return checked;
 
 }
 
