@@ -15,7 +15,9 @@
 #include "LinkedBag.h"
 #include "LinkedList.h"
 #include "LinkedQueue.h"
-
+#include "ArrayStack.h"
+#include "AVLTree.h"
+#include "BookComparator.h"
 using namespace std;
 
 template<class ItemType>
@@ -25,8 +27,11 @@ private:
     string address;
     string officeHours;
 
-    LinkedBag<shared_ptr<Book>> availBooks;
+    shared_ptr<LinkedBag<shared_ptr<Book>>> books;
+    shared_ptr<LinkedBag<shared_ptr<Book>>> checkedBook;
     shared_ptr<LinkedList<shared_ptr<Patron>>> patrons;
+    ArrayStack<shared_ptr<Book>> dropbox;
+    shared_ptr<AVLTree<ItemType>> bookIndex;
 
 public:
     explicit Library();
@@ -35,13 +40,13 @@ public:
     bool addPatron(string name, string address, string phoneNum);
     bool isAvailable(string title);
     bool isCheckedOut(string title);
-    bool returnBook();
+    bool returnBook(string title);
     bool addBook(const string &aTitle, const string &aIsbn, const string &aDatePublished,
                  const string &aPublisher, const string &aNumOfPages);
     bool removeBook(string title);
 
     void checkout(string phoneNum, string title);
-    void placeHold();
+    void placeHold(string title, string phoneNum);
     void listAvailBooks();
     void listCheckedOut();
     void listPatrons();

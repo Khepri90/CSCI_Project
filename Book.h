@@ -22,6 +22,7 @@ private:
     string datePublished;
     string publisher;
     string numOfPages;
+    shared_ptr<LinkedBag<shared_ptr<Author>>> authors;
 
     shared_ptr<Patron> currentPatron;
 
