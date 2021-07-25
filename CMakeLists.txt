@@ -3,4 +3,4 @@ project(Project)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Project main.cpp Library.cpp Library.h Book.cpp Book.h Patron.cpp Patron.h Author.cpp Author.h)
+add_executable(Project main.cpp Library.cpp Library.h Book.cpp Book.h Patron.cpp Patron.h Author.cpp Author.h BagInterface.h LinkedBag.cpp LinkedBag.h LinkedList.cpp LinkedList.h)
