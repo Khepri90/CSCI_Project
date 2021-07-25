@@ -12,9 +12,9 @@
 #include <iomanip>
 #include "Book.h"
 #include "Author.h"
-#include "Template/LinkedBag.h"
-#include "Template/LinkedList.h"
-#include "Template/LinkedQueue.h"
+#include "LinkedBag.h"
+#include "LinkedList.h"
+#include "LinkedQueue.h"
 
 using namespace std;
 
