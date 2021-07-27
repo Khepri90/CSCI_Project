@@ -53,6 +53,7 @@ public:
     void loadFile();
     void saveFile();
 
+    shared_ptr<Book>searchBookExact(string title);
     vector<shared_ptr<Book>> search(string title);
 
     friend ostream &operator<<(ostream &out, const Library& library);

@@ -28,10 +28,10 @@ Library<ItemType>::~Library() { //Default deconstructor
 
 template<class ItemType>
 bool Library<ItemType>::removeBook(string title) { //remove available books from inventory
-    auto aBook;
+    auto aBook = searchBookExact(title);
     if(isAvailable(aBook)) {
         this->books.remove(aBook); //placeholder need to find pointer to book with title and remove it.
-        this->bookIndex.remove(aBook)
+        this->bookIndex.remove(aBook);
         return true;
     }
 }
@@ -60,8 +60,9 @@ bool Library<ItemType>::addBook(const string &aTitle, const string &aIsbn, const
 
                                const string &aPublisher, const string &aNumOfPages) {
     Book newBook = Book(aTitle, aIsbn, aDatePublished, aPublisher, aNumOfPages);
-    this->books.add(newBook)
+    this->books.add(newBook);
     bookIndex->add(newBook);
+    return true;
 }
 
 template<class ItemType>
@@ -177,4 +178,12 @@ vector<shared_ptr<Book>> Library<ItemType>::search(string title) {
     }
     return foundBooks;
     //return vector<shared_ptr<Book>>();
+}
+
+template<class ItemType>
+shared_ptr<Book> Library<ItemType>::searchBookExact(string title) {
+    for (const shared_ptr<Book>& aBook:this->books->toVector())
+        if (aBook->getTitle() == title)
+            return aBook;
+    return nullptr;
 }
