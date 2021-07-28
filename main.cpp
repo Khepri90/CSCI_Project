@@ -1,7 +1,8 @@
 #include <iostream>
+#include "Library.cpp"de
 
 using namespace std;
-void displayMenu(){
+int displayMenu(){
     cout << "=============================================================" << endl;
     cout << "                   CSE LIBRARY MAIN MENU                " << endl;
     cout << "=============================================================" << endl;
@@ -25,11 +26,29 @@ void displayMenu(){
     cout << "99) Quit." << endl;
     cout << "============================================" << endl;
 
+    int choice =0;
+    cout << endl << endl;
+    while (choice < 1 || choice > 21) {
+        cout << "   Select your option [1-11 / 20-21 / 99]    " << endl;
+        cin >> choice;
+        if (choice == 99) {
+            return -1;
+        }
+        return choice;
+    }
+
 }
 
 int main() {
-    displayMenu();
-    chooseOption();
+    auto myLibrary = make_shared<Library>();
+    int choice = 0;
+    string Title;
+
+    while(choice>=0){
+
+    }
+
+
 
 
 

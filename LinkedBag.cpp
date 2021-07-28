@@ -3,7 +3,7 @@
 //
 
 #include "LinkedBag.h"
-#include "LinkedBag.h"
+
 
 
 template<class ItemType>

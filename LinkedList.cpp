@@ -3,7 +3,7 @@
 //
 
 #include "LinkedList.h"
-#include "LinkedList.h"
+
 #include <cassert>
 
 
