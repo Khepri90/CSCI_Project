@@ -1,10 +1,9 @@
 //
-// Created by dariu on 7/25/2021.
+// Created by dariu on 7/27/2021.
 //
 
 #ifndef PROJECT_QUEUEINTERFACE_H
 #define PROJECT_QUEUEINTERFACE_H
-
 template<class ItemType>
 class QueueInterface {
 public:

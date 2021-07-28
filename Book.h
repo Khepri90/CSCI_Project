@@ -23,7 +23,7 @@ private:
     string publisher;
     string numOfPages;
     shared_ptr<LinkedBag<shared_ptr<Author>>> authors;
-
+    unique_ptr<LinkedQueue<shared_ptr<Patron>>> waitingPatrons;
     shared_ptr<Patron> currentPatron;
 
 
@@ -33,11 +33,12 @@ public:
                   const string &aPublisher, const string &aNumOfPages);
     ~Book();
 
-    string getTitle();
-    string getIsbn();
-    string getDatePub();
-    string getPublisher();
-    string getNumOfPages();
+    string getTitle() const;
+    string getIsbn() const;
+    string getDatePub() const;
+    string getPublisher() const;
+    string getNumOfPages() const;
+    string getAuthor()const;
 
     void setTitle(string title);
     void setIsbn(string isbn);
@@ -47,6 +48,8 @@ public:
 
     void setPatron(shared_ptr<Patron> aPatron);
     bool isChecked();
+
+    friend ostream &operator<<(ostream &out, const Book& aBook);
 
 };
 

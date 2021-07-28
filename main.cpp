@@ -26,17 +26,6 @@ void displayMenu(){
     cout << "============================================" << endl;
 
 }
-int chooseOption(){
-    int choice;
-    cout<<endl<<endl;
-    while (choice > 1 || choice < 21) {
-        cout<<"   Select your option [1-11 / 20-21 / 99]    "<<endl;
-        cin >> choice;
-        if (choice == 99) {
-            return -1;
-        }
-    return choice;
-}
 
 int main() {
     displayMenu();

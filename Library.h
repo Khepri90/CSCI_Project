@@ -47,6 +47,7 @@ public:
 
     void checkout(string phoneNum, string title);
     void placeHold(string title, string phoneNum);
+    void checkIn();
     void listAvailBooks();
     void listCheckedOut();
     void listPatrons();
@@ -56,7 +57,6 @@ public:
     shared_ptr<Book>searchBookExact(string title);
     vector<shared_ptr<Book>> search(string title);
 
-    friend ostream &operator<<(ostream &out, const Library& library);
 };
 
 

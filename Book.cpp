@@ -3,7 +3,7 @@
 //
 
 #include "Book.h"
-
+#include "iomanip"
 Book::Book() {
 
 }
@@ -20,27 +20,27 @@ Book::~Book() {
 }
 
 
-string Book::getTitle() {
+string Book::getTitle() const{
     return title;
 }
 
 
-string Book::getIsbn() {
+string Book::getIsbn() const{
     return isbn;
 }
 
 
-string Book::getDatePub() {
+string Book::getDatePub() const{
     return datePublished;
 }
 
 
-string Book::getPublisher() {
+string Book::getPublisher() const{
     return publisher;
 }
 
 
-string Book::getNumOfPages() {
+string Book::getNumOfPages() const{
     return numOfPages;
 }
 
@@ -87,5 +87,16 @@ bool Book::isChecked() {
 
     return checked;
 
+}
+ostream &operator<<(ostream &out, const Book& aBook){
+
+    out <<
+         setw(10) << aBook.getTitle() << " -- " <<
+         setw(10) << aBook.getAuthor() << " -- " <<endl;
+}
+
+string Book::getAuthor() const {
+    vector<shared_ptr<Author>> author = authors->toVector();
+    return author[0]->getName();
 }
 

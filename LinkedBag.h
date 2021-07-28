@@ -4,7 +4,6 @@
 
 #ifndef PROJECT_LINKEDBAG_H
 #define PROJECT_LINKEDBAG_H
-
 #include "BagInterface.h"
 #include "Node.h"
 
@@ -37,5 +36,4 @@ public:
 };
 
 #include "LinkedBag.cpp"
-
 #endif //PROJECT_LINKEDBAG_H

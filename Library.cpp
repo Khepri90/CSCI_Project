@@ -52,7 +52,9 @@ bool Library<ItemType>::isAvailable(string title) {
 
 template<class ItemType>
 bool Library<ItemType>::isCheckedOut(string title) {
-    return false;
+    for(Book aBook: this->checkedBook.toVector())
+        if(aBook.getTitle() == title)
+            return true;
 }
 
 template<class ItemType>
@@ -67,23 +69,30 @@ bool Library<ItemType>::addBook(const string &aTitle, const string &aIsbn, const
 
 template<class ItemType>
 void Library<ItemType>::checkout(string phoneNum, string title) {
-   /*
     bool canCheckout = isAvailable(title);
+    auto aBook = searchBookExact(title);
+
+
     if (canCheckout){
-
-
+        for (int i = 0; i < patrons->getLength(); i++){
+            if (patrons->getEntry(i)->getPhoneNumber()==phoneNum)
+                aBook.setPatron(patrons->getEntry(i));
+        }
+        checkedBook->add(aBook);
+        books->remove(aBook);
     }
-    */
+
 }
 
 template<class ItemType>
 void Library<ItemType>::placeHold(string title, string phoneNum) {
-
+    auto aBook = searchBookExact(title);
 }
 
 template<class ItemType>
 bool Library<ItemType>::returnBook(string title) { //drop off books into drop box
-    return false;
+    auto aBook = searchBookExact(title);
+    dropbox.push(aBook);
 }
 
 
@@ -186,4 +195,9 @@ shared_ptr<Book> Library<ItemType>::searchBookExact(string title) {
         if (aBook->getTitle() == title)
             return aBook;
     return nullptr;
+}
+
+template<class ItemType>
+void Library<ItemType>::checkIn() {
+
 }

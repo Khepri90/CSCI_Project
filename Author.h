@@ -23,7 +23,4 @@ public:
 };
 
 
-
-#include "Author.cpp"
-
 #endif //PROJECT_AUTHOR_H
