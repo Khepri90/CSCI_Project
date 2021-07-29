@@ -87,6 +87,12 @@ void Library<ItemType>::checkout(string phoneNum, string title) {
 template<class ItemType>
 void Library<ItemType>::placeHold(string title, string phoneNum) {
     auto aBook = searchBookExact(title);
+    shared_ptr<Patron> aPatron = nullptr;
+    for (int i = 0; i < patrons->getLength(); i++){
+        if (patrons->getEntry(i)->getPhoneNumber()==phoneNum)
+             aPatron = patrons->getEntry(i);
+    }
+    aBook->getHold()->enqueue(aPatron);
 }
 
 template<class ItemType>
@@ -174,18 +180,18 @@ vector<shared_ptr<Book>> Library<ItemType>::search(string title) {
     string searchTitle = ".*"+title+".*";
 
     transform(searchTitle.begin(), searchTitle.end(), searchTitle.begin(), ::toupper);
-    const regex txt_regex(searchTitle);
+        const regex txt_regex(searchTitle);
 
-    vector<shared_ptr<Book>> bookVector = this->books->toVector();
-    for (int i=0; i < this->books->getCurrentSize(); i++){
-        string bookTitle = bookVector[i]->getTitle();
-        transform(bookTitle.begin(), bookTitle.end(), bookTitle.begin(), ::toupper);
+        vector<shared_ptr<Book>> bookVector = this->books->toVector();
+        for (int i=0; i < this->books->getCurrentSize(); i++){
+            string bookTitle = bookVector[i]->getTitle();
+            transform(bookTitle.begin(), bookTitle.end(), bookTitle.begin(), ::toupper);
 
-        if (regex_match(bookTitle, txt_regex)){
-            foundBooks.push_back(bookVector[i]);
+            if (regex_match(bookTitle, txt_regex)){
+                foundBooks.push_back(bookVector[i]);
+            }
         }
-    }
-    return foundBooks;
+        return foundBooks;
     //return vector<shared_ptr<Book>>();
 }
 
@@ -199,5 +205,14 @@ shared_ptr<Book> Library<ItemType>::searchBookExact(string title) {
 
 template<class ItemType>
 void Library<ItemType>::checkIn() {
-
+    while(!dropbox.isEmpty()){
+       if(!dropbox.peek()->getHold()->isEmpty()) {
+           dropbox.peek()->setPatron(dropbox.peek()->getHold()->peekFront());
+           dropbox.peek()->getHold()->dequeue();
+           checkedBook->add(dropbox.peek());
+       } else {
+           books->add(dropbox.peek());
+       }
+        dropbox.pop();
+    }
 }

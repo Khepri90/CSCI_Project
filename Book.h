@@ -23,7 +23,7 @@ private:
     string publisher;
     string numOfPages;
     shared_ptr<LinkedBag<shared_ptr<Author>>> authors;
-    unique_ptr<LinkedQueue<shared_ptr<Patron>>> waitingPatrons;
+    shared_ptr<LinkedQueue<shared_ptr<Patron>>> waitingPatrons;
     shared_ptr<Patron> currentPatron;
 
 
@@ -39,7 +39,7 @@ public:
     string getPublisher() const;
     string getNumOfPages() const;
     string getAuthor()const;
-
+    shared_ptr<LinkedQueue<shared_ptr<Patron>>> getHold() const;
     void setTitle(string title);
     void setIsbn(string isbn);
     void setDatePub(string datePublished);

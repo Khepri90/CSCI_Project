@@ -100,3 +100,7 @@ string Book::getAuthor() const {
     return author[0]->getName();
 }
 
+shared_ptr<LinkedQueue<shared_ptr<Patron>>> Book::getHold() const {
+    return waitingPatrons;
+}
+
