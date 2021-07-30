@@ -10,7 +10,7 @@ Book::Book() {
 
 
 Book::Book(const string &aTitle, const string &aIsbn, const string &aDatePublished,
-           const string &aPublisher, const string &aNumOfPages) {
+           const string &aPublisher, const string &aNumOfPages) : currentPatron(nullptr) {
 
 }
 
@@ -71,7 +71,7 @@ void Book::setNumOfPages(string numOfPages) {
 
 void Book::setPatron(shared_ptr<Patron> aPatron) {
     if(!this->isChecked()){
-        this->currentPatron = aPatron;
+        currentPatron = aPatron;
     } else {
         throw logic_error("Invalid, Book is not available.");
     }

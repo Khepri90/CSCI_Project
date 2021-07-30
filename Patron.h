@@ -25,7 +25,7 @@ public:
     void setAddress(const string& anAddress);
     string getPhoneNumber() const;
     void setPhoneNumber(const string& aPhoneNum);
-
+    friend ostream &operator<<(ostream &out, const Patron& aPatron);
 };
 
 

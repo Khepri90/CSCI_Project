@@ -17,10 +17,10 @@
 #include "LinkedQueue.h"
 #include "ArrayStack.h"
 #include "AVLTree.h"
+#include "BinarySearchTree.h"
 #include "BookComparator.h"
 using namespace std;
 
-template<class ItemType>
 class Library {
 private:
     string name;
@@ -31,10 +31,10 @@ private:
     shared_ptr<LinkedBag<shared_ptr<Book>>> checkedBook;
     shared_ptr<LinkedList<shared_ptr<Patron>>> patrons;
     ArrayStack<shared_ptr<Book>> dropbox;
-    shared_ptr<AVLTree<ItemType>> bookIndex;
+    shared_ptr<BinarySearchTree<shared_ptr<Book>>> bookIndex;
 
 public:
-    explicit Library();
+     Library();
     ~Library();
 
     bool addPatron(string name, string address, string phoneNum);

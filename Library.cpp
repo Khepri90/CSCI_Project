@@ -7,13 +7,14 @@
 
 #include "regex"
 using namespace std;
-template<class ItemType>
-Library<ItemType>::Library() { //Default constructor
 
+Library::Library() { //Default constructor
+shared_ptr<Comparator<shared_ptr<Book>>> aBookComparator = make_shared<BookComparator>();
+bookIndex = make_shared<BinarySearchTree<shared_ptr<Book>>>(aBookComparator);
 }
 
-template<class ItemType>
-Library<ItemType>::~Library() { //Default deconstructor
+
+Library::~Library() { //Default deconstructor
     vector<shared_ptr<Book>> vecBooks = books->toVector();
     /* getting error for no toVector in linked list with patrons
     vector<shared_ptr<Patron>> vecPatron = patrons->toVector();
@@ -26,49 +27,50 @@ Library<ItemType>::~Library() { //Default deconstructor
 
 
 
-template<class ItemType>
-bool Library<ItemType>::removeBook(string title) { //remove available books from inventory
+
+bool Library::removeBook(string title) { //remove available books from inventory
     auto aBook = searchBookExact(title);
-    if(isAvailable(aBook)) {
-        this->books.remove(aBook); //placeholder need to find pointer to book with title and remove it.
-        this->bookIndex.remove(aBook);
+    if(isAvailable(aBook->getTitle())){
+        this->books->remove(aBook); //placeholder need to find pointer to book with title and remove it.
+        this->bookIndex->remove(aBook);
         return true;
     }
 }
 
-template<class ItemType>
-bool Library<ItemType>::addPatron(string name, string address, string phoneNum) {
-    Patron newPatron = Patron(name, address, phoneNum);
-    return(this->patrons.add(newPatron));
+
+bool Library::addPatron(string name, string address, string phoneNum) {
+    auto newPatron = make_shared<Patron>(name, address, phoneNum);
+    return(this->patrons->insert(patrons->getLength() + 1, newPatron));
 }
 
-template<class ItemType>
-bool Library<ItemType>::isAvailable(string title) {
-    for(Book aBook: this->books.toVector())
-        if(aBook.getTitle() == title)
+
+bool Library::isAvailable(string title) {
+    auto aBook = searchBookExact(title);
+        if(aBook->getTitle() == title)
             return true;
 
 }
 
-template<class ItemType>
-bool Library<ItemType>::isCheckedOut(string title) {
-    for(Book aBook: this->checkedBook.toVector())
-        if(aBook.getTitle() == title)
+
+bool Library::isCheckedOut(string title) {
+    auto aBook = searchBookExact(title);
+        if(aBook->getTitle() == title)
             return true;
 }
 
-template<class ItemType>
-bool Library<ItemType>::addBook(const string &aTitle, const string &aIsbn, const string &aDatePublished,
+
+bool Library::addBook(const string &aTitle, const string &aIsbn, const string &aDatePublished,
 
                                const string &aPublisher, const string &aNumOfPages) {
-    Book newBook = Book(aTitle, aIsbn, aDatePublished, aPublisher, aNumOfPages);
-    this->books.add(newBook);
+
+    auto newBook = make_shared<Book>(aTitle, aIsbn, aDatePublished, aPublisher, aNumOfPages);
+    this->books->add(newBook);
     bookIndex->add(newBook);
     return true;
 }
 
-template<class ItemType>
-void Library<ItemType>::checkout(string phoneNum, string title) {
+
+void Library::checkout(string phoneNum, string title) {
     bool canCheckout = isAvailable(title);
     auto aBook = searchBookExact(title);
 
@@ -76,7 +78,7 @@ void Library<ItemType>::checkout(string phoneNum, string title) {
     if (canCheckout){
         for (int i = 0; i < patrons->getLength(); i++){
             if (patrons->getEntry(i)->getPhoneNumber()==phoneNum)
-                aBook.setPatron(patrons->getEntry(i));
+                aBook->setPatron(patrons->getEntry(i));
         }
         checkedBook->add(aBook);
         books->remove(aBook);
@@ -84,26 +86,27 @@ void Library<ItemType>::checkout(string phoneNum, string title) {
 
 }
 
-template<class ItemType>
-void Library<ItemType>::placeHold(string title, string phoneNum) {
-    auto aBook = searchBookExact(title);
+
+void Library::placeHold(string title, string phoneNum) {
+  /*  auto aBook = searchBookExact(title);
     shared_ptr<Patron> aPatron = nullptr;
     for (int i = 0; i < patrons->getLength(); i++){
         if (patrons->getEntry(i)->getPhoneNumber()==phoneNum)
              aPatron = patrons->getEntry(i);
     }
     aBook->getHold()->enqueue(aPatron);
+    */
 }
 
-template<class ItemType>
-bool Library<ItemType>::returnBook(string title) { //drop off books into drop box
+
+bool Library::returnBook(string title) { //drop off books into drop box
     auto aBook = searchBookExact(title);
     dropbox.push(aBook);
 }
 
 
-template<class ItemType>
-void Library<ItemType>::listAvailBooks() { //display a list of all available books.
+
+void Library::listAvailBooks() { //display a list of all available books.
     cout << string(57, '=') << endl;
     cout <<
          setw(10) << "Book Title" << " -- " <<
@@ -111,7 +114,7 @@ void Library<ItemType>::listAvailBooks() { //display a list of all available boo
          setw(10) << "Available" << " -- " << endl;
     cout << string(57, '=') << endl;
 
-    vector<shared_ptr<Book>> book = this->books.toVector();
+    vector<shared_ptr<Book>> book = this->books->toVector();
     for(int i = 0; i < books->getCurrentSize(); i++){
         cout << left <<
              setw(10) << book[i]->getTitle() << " -- " <<
@@ -123,8 +126,8 @@ void Library<ItemType>::listAvailBooks() { //display a list of all available boo
 }
 
 
-template<class ItemType>
-void Library<ItemType>::listCheckedOut() {
+
+void Library::listCheckedOut() {
     cout << string(57, '=') << endl;
     cout <<
          setw(10) << "Book Title" << " -- " <<
@@ -132,7 +135,7 @@ void Library<ItemType>::listCheckedOut() {
          setw(10) << "Available" << " -- " << endl;
     cout << string(57, '=') << endl;
 
-    vector<shared_ptr<Book>> book = this->checkedBook.toVector();
+    vector<shared_ptr<Book>> book = this->checkedBook->toVector();
     for(int i = 0; i < books->getCurrentSize(); i++){
         cout << left <<
              setw(10) << book[i]->getTitle() << " -- " <<
@@ -142,8 +145,8 @@ void Library<ItemType>::listCheckedOut() {
     }
 }
 
-template<class ItemType>
-void Library<ItemType>::listPatrons() {
+
+void Library::listPatrons() {
     cout << string(57, '=') << endl;
     cout <<
          setw(10) << "Name" << " -- " <<
@@ -164,18 +167,18 @@ void Library<ItemType>::listPatrons() {
 
 }
 
-template<class ItemType>
-void Library<ItemType>::loadFile() {
+
+void Library::loadFile() {
 
 }
 
-template<class ItemType>
-void Library<ItemType>::saveFile() {
+
+void Library::saveFile() {
 
 }
 
-template<class ItemType>
-vector<shared_ptr<Book>> Library<ItemType>::search(string title) {
+
+vector<shared_ptr<Book>> Library::search(string title) {
     vector<shared_ptr<Book>> foundBooks;
     string searchTitle = ".*"+title+".*";
 
@@ -195,17 +198,17 @@ vector<shared_ptr<Book>> Library<ItemType>::search(string title) {
     //return vector<shared_ptr<Book>>();
 }
 
-template<class ItemType>
-shared_ptr<Book> Library<ItemType>::searchBookExact(string title) {
+
+shared_ptr<Book> Library::searchBookExact(string title) {
     for (const shared_ptr<Book>& aBook:this->books->toVector())
         if (aBook->getTitle() == title)
             return aBook;
     return nullptr;
 }
 
-template<class ItemType>
-void Library<ItemType>::checkIn() {
-    while(!dropbox.isEmpty()){
+
+void Library::checkIn() {
+   /* while(!dropbox.isEmpty()){
        if(!dropbox.peek()->getHold()->isEmpty()) {
            dropbox.peek()->setPatron(dropbox.peek()->getHold()->peekFront());
            dropbox.peek()->getHold()->dequeue();
@@ -214,5 +217,5 @@ void Library<ItemType>::checkIn() {
            books->add(dropbox.peek());
        }
         dropbox.pop();
-    }
+    }*/
 }
