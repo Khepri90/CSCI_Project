@@ -1,5 +1,10 @@
 #include <iostream>
-#include "Library.cpp"de
+#include <memory>
+#include "Book.h"
+#include "Library.h"
+
+
+
 
 using namespace std;
 int displayMenu(){
@@ -39,14 +44,90 @@ int displayMenu(){
 
 }
 
+void loadBookDatabase(shared_ptr<Library>&  myLibrary){
+    cout <<"Loading initial Book data to Library"<<endl;
+
+    myLibrary->addBook("Book1", "0001", "2000", "Pearson", "150");
+    myLibrary->addBook("Book2", "0002", "2005", "Pearson", "345");
+    myLibrary->addBook("Book3", "0003", "2010", "Pearson", "1170");
+    myLibrary->addBook("Book4", "0004", "2015", "Pearson", "200");
+    myLibrary->listAvailBooks();
+
+
+
+}
+
+
 int main() {
     auto myLibrary = make_shared<Library>();
-    int choice = 0;
-    string Title;
+    loadBookDatabase(myLibrary);
+    /*
 
+    // Book variables
+    string Title, ISBN, aDataPublished, aPublisher, NumOfPages;
+     // Patron variables
+    string name, address, phoneNum;
+    int choice = 0;
     while(choice>=0){
+        choice = displayMenu();
+        switch(choice){
+            case 1: // Add a book
+                bool loop = true;
+                string answer;
+                while(loop){
+                    cout<<"Enter book information to be added to library"<<endl;
+
+                    cin>> Title>>ISBN>>aDataPublished>>aPublisher>>NumOfPages;
+                    myLibrary->addBook(Title, ISBN, aDataPublished, aPublisher, NumOfPages);
+                    cout<<"Do you want to add another book (Y/N)?"<<endl;
+                    cin >> answer;
+                    if(answer == "Y" || answer == "y")
+                        loop = true;
+                    else
+                        loop = false;
+                break;
+            case 2: // List available books
+                myLibrary->listAvailBooks();
+                break;
+            case 3: // List checked out books
+                myLibrary->listCheckOut();
+                break;
+            case 4: // Remove a book by title
+                cout<<"Which book would you like to remove? (enter Book Title)"<<endl;
+                cin>> Title>>endl;
+                myLibrary->removeBook(Title);
+                break;
+            case 5: // Search for a book
+                cout<<"What would you like to search for? (enter Book Title)"<<endl;
+                cin>>Title;
+                myLibrary->searchBookExact(Title)
+                break;
+            case 6: // Add a patron
+                cout<<"Enter Patron information to be added to Library"<<endl;
+                cin>> name>>address>>phoneNum;
+
+                break;
+            case 7: // List patrons
+                break;
+            case 8: // Check out a book
+                break;
+            case 9: // Place a hold
+                break;
+            case 10: // Place a book into dropbox
+                break;
+            case 11: // Check in books from dropbox
+                break;
+            case 20: // Load data
+                break;
+            case 21: // Save data
+                break;
+
+
+
+        }
 
     }
+     */
 
 
 
