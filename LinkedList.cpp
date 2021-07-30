@@ -12,7 +12,7 @@ LinkedList<ItemType>::LinkedList(): headPtr(nullptr), itemCount(0) {}
 
 template<class ItemType>
 LinkedList<ItemType>::LinkedList(const LinkedList<ItemType> &aList): itemCount(aList.itemCount) {
-    Node<ItemType>* origChainPtr = aList.itemCount;
+    shared_ptr<Node<ItemType>> origChainPtr = aList.itemCount;
 
     if(origChainPtr== nullptr){
         headPtr== nullptr;
@@ -22,12 +22,12 @@ LinkedList<ItemType>::LinkedList(const LinkedList<ItemType> &aList): itemCount(a
         headPtr = new Node<ItemType>();
         headPtr->setItem(origChainPtr->getItem());
 
-        Node<ItemType> *newChainPtr = headPtr;
+        shared_ptr<Node<ItemType>> newChainPtr = headPtr;
         origChainPtr = origChainPtr->getNext();
         while(origChainPtr!= nullptr){
             ItemType nextItem = origChainPtr->getItem();
 
-            Node<ItemType>* newNodePtr = new Node<ItemType>(nextItem);
+            shared_ptr<Node<ItemType>> newNodePtr = new Node<ItemType>(nextItem);
 
             newChainPtr->setnext(newNodePtr);
 
@@ -60,7 +60,7 @@ bool LinkedList<ItemType>::insert(int newPosition, const ItemType &newEntry) {
     bool ableToInsert = (newPosition >= 1) && (newPosition <= itemCount+1);
     if (ableToInsert){
         //Create a new node containing the entry
-        Node<ItemType>* newNodePtr = new Node<ItemType>(newEntry);
+        auto newNodePtr =  make_shared<Node<ItemType>>(newEntry);
 
 
         if(newPosition==1){
@@ -68,7 +68,7 @@ bool LinkedList<ItemType>::insert(int newPosition, const ItemType &newEntry) {
             headPtr = newNodePtr;
         } else
         {
-            Node<ItemType> *prevPtr = getNodeAt(newPosition-1);
+            auto prevPtr = getNodeAt(newPosition-1);
             newNodePtr->setNext(prevPtr->getNext());
             prevPtr->setNext(newNodePtr);
         }
@@ -81,22 +81,17 @@ template<class ItemType>
 bool LinkedList<ItemType>::remove(int position) {
     bool ableToRemove = (position >= 1) && (position <= 1);
     if(ableToRemove){
-        Node<ItemType>* curPtr = nullptr;
+
         if(position == 1) {
-            curPtr = headPtr;
             headPtr = headPtr->getNext();
         }else {
 
-            Node<ItemType>* prevPtr = getNodeAt(position - 1);
+            auto prevPtr = getNodeAt(position - 1);
 
-            curPtr = prevPtr->getNext();
+            auto curPtr = prevPtr->getNext();
 
             prevPtr->setNext(curPtr->getNext());
         }
-
-        curPtr->setNext(nullptr);
-        delete curPtr;
-        curPtr = nullptr;
 
         itemCount--;
 
@@ -108,9 +103,8 @@ bool LinkedList<ItemType>::remove(int position) {
 
 template<class ItemType>
 void LinkedList<ItemType>::clear() {
-    while(!isEmpty()){
-        remove(1);
-    }
+    headPtr = nullptr;
+    itemCount = 0;
 }
 
 template<class ItemType>
@@ -118,7 +112,7 @@ ItemType LinkedList<ItemType>::getEntry(int position) const noexcept(false) {
     //Enforce precondition
     bool ableToGet = (position >= 1) && (position <= itemCount);
     if (ableToGet){
-        Node<ItemType>* nodePtr =  getNodeAt(position);
+        shared_ptr<Node<ItemType>> nodePtr =  getNodeAt(position);
         return nodePtr->getItem();
     }
     else
@@ -130,11 +124,11 @@ ItemType LinkedList<ItemType>::getEntry(int position) const noexcept(false) {
 }
 
 template<class ItemType>
-Node<ItemType> *LinkedList<ItemType>::getNodeAt(int position) const {
+shared_ptr<Node<ItemType>> LinkedList<ItemType>::getNodeAt(int position) const {
 
     assert((position>= 1) && (position <= itemCount));
 
-    Node<ItemType>* curPtr = headPtr;
+    shared_ptr<Node<ItemType>> curPtr = headPtr;
     for (int skip = 1; skip < position; skip++){
         curPtr = curPtr->getNext();
     }
@@ -146,7 +140,7 @@ void LinkedList<ItemType>::replace(int position, const ItemType &newEntry) {
 
     bool ableToSet = (position >= 1) && (position <= itemCount);
     if (ableToSet){
-        Node<ItemType>* nodePtr = getNodeAt(position);
+        shared_ptr<Node<ItemType>> nodePtr = getNodeAt(position);
         nodePtr->setItem(newEntry);
     } else {
         std::string message = "replace() called with an invalid position.";

@@ -10,7 +10,8 @@ Book::Book() {
 
 
 Book::Book(const string &aTitle, const string &aIsbn, const string &aDatePublished,
-           const string &aPublisher, const string &aNumOfPages) : currentPatron(nullptr) {
+           const string &aPublisher, const string &aNumOfPages) : title(aTitle), isbn(aIsbn),
+           datePublished(aDatePublished), publisher(aPublisher), numOfPages(aNumOfPages), currentPatron(nullptr) {
 
 }
 
@@ -88,19 +89,33 @@ bool Book::isChecked() {
     return checked;
 
 }
-ostream &operator<<(ostream &out, const Book& aBook){
+ostream &operator<<(ostream &out, shared_ptr<Book>& aBook){
 
     out <<
-         setw(10) << aBook.getTitle() << " -- " <<
-         setw(10) << aBook.getAuthor() << " -- " <<endl;
+         setw(10) << aBook->getTitle() << " -- " <<
+         setw(10) << aBook->getAuthor() << " -- " <<endl;
+    return out;
 }
 
-string Book::getAuthor() const {
-    vector<shared_ptr<Author>> author = authors->toVector();
-    return author[0]->getName();
+string Book::getAuthor()  const{
+    vector<shared_ptr<Author>> author = authors.toVector();
+    string aName = author[0]->getName();
+    return aName;
 }
 
-shared_ptr<LinkedQueue<shared_ptr<Patron>>> Book::getHold() const {
+LinkedQueue<shared_ptr<Patron>> Book::getHold() const {
     return waitingPatrons;
+}
+
+bool Book::addAuthor(const shared_ptr<Author> &anAuthor) {
+    if(this->authors.contains(anAuthor))
+        return false;
+    else{
+        return this->authors.add(anAuthor);
+    }
+}
+
+shared_ptr<Patron> Book::getPatron() {
+    return currentPatron;
 }
 

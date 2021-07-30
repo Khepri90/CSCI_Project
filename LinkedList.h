@@ -13,7 +13,7 @@
 template<class ItemType>
 class LinkedList : public ListInterface<ItemType>{
 private:
-    Node<ItemType>* headPtr; //Pointer to first Node in the chain
+    shared_ptr<Node<ItemType>> headPtr; //Pointer to first Node in the chain
     //(contains first entry in the list)
     int itemCount;           //current count of entries
 
@@ -21,7 +21,7 @@ private:
      * Locates a specified node in the list.
      *
      */
-    Node<ItemType>* getNodeAt(int position) const;
+    shared_ptr<Node<ItemType>> getNodeAt(int position) const;
 
 public:
     explicit LinkedList();

@@ -26,8 +26,7 @@ protected:
 
     shared_ptr<BinaryNode<ItemType>> rotateDoubleRightLeftChild(shared_ptr<BinaryNode<ItemType>> root);
 
-    shared_ptr<BinaryNode<ItemType>>
-    placeNode(shared_ptr<BinaryNode<ItemType>> subTreePtr, shared_ptr<BinaryNode<ItemType>> newNode) override;
+    shared_ptr<BinaryNode<ItemType>>placeNode(shared_ptr<BinaryNode<ItemType>> subTreePtr, shared_ptr<BinaryNode<ItemType>> newNode) override;
 
     shared_ptr<BinaryNode<ItemType>>removeValue(shared_ptr<BinaryNode<ItemType>> subTreePtr, ItemType target,
                                                 bool &success) override;

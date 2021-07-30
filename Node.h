@@ -5,22 +5,24 @@
 #ifndef PROJECT_NODE_H
 #define PROJECT_NODE_H
 
+#include "memory"
 
+using namespace std;
 
 template<class ItemType>
 class Node {
 private:
     ItemType item;
-    Node<ItemType>* next;
+    shared_ptr<Node<ItemType>> next;
 
 public:
     Node();
-    Node(const ItemType& anItem);
-    Node(const ItemType& anItem, Node<ItemType>* nextNodePtr);
+    explicit Node(const ItemType& anItem);
+    Node(const ItemType& anItem, shared_ptr<Node<ItemType>> nextNodePtr);
     void setItem(const ItemType& anItem);
-    void setNext(Node<ItemType>* nextNodePtr);
+    void setNext(shared_ptr<Node<ItemType>> nextNodePtr);
     ItemType getItem() const;
-    Node<ItemType>* getNext() const;
+    shared_ptr<Node<ItemType>> getNext() const;
 };
 
 

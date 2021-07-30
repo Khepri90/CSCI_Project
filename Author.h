@@ -10,17 +10,17 @@ using namespace std;
 
 class Author {
 private:
-    string name;
+     string name;
 
 public:
-    Author();
-    Author(string& aName);
-    ~Author();
+    explicit Author();
+    explicit Author(const string& aName);
+    virtual ~Author();
 
-    string getName();
-    void setName(string& aName);
-
+     string getName() const;
+    void setName(const string& aName);
+    friend ostream& operator<<(ostream& out, const Author& anAuthor);
 };
 
-
+#include "Author.cpp"
 #endif //PROJECT_AUTHOR_H

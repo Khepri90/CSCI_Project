@@ -34,12 +34,13 @@ void Patron::setPhoneNumber(const string& aPhoneNumb){
     phoneNum = aPhoneNumb;
 }
 ostream &operator<<(ostream &out, const Patron& aPatron){
-    cout << string(57, '=') << endl;
-    cout <<
+    out << string(57, '=') << endl
+    <<
          setw(10) << aPatron.getName() << " -- " <<
          setw(10) << aPatron.getAddress()<< " -- " <<
-         setw(10) << aPatron.getPhoneNumber() << " -- " << endl;
-    cout << string(57, '=') << endl;
+         setw(10) << aPatron.getPhoneNumber() << " -- " << endl
+     << string(57, '=') << endl;
+    return out;
 }
 
 

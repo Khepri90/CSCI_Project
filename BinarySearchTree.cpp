@@ -262,3 +262,6 @@ operator=(const BinarySearchTree<ItemType> &rightHandSide) {
     return *this;
 }
 
+template<class ItemType>
+BinarySearchTree<ItemType>::BinarySearchTree() {}
+

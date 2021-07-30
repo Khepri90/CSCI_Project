@@ -11,7 +11,7 @@ template<class ItemType>
 Node<ItemType>::Node(const ItemType &anItem): item(anItem), next(nullptr) {}
 
 template<class ItemType>
-Node<ItemType>::Node(const ItemType &anItem, Node<ItemType> *nextNodePtr): item(anItem), next(nextNodePtr) {}
+Node<ItemType>::Node(const ItemType &anItem, shared_ptr<Node<ItemType>> nextNodePtr): item(anItem), next(nextNodePtr) {}
 
 template<class ItemType>
 void Node<ItemType>::setItem(const ItemType &anItem) {
@@ -19,7 +19,7 @@ void Node<ItemType>::setItem(const ItemType &anItem) {
 }
 
 template<class ItemType>
-void Node<ItemType>::setNext(Node<ItemType> *nextNodePtr) {
+void Node<ItemType>::setNext(shared_ptr<Node<ItemType>> nextNodePtr) {
     next = nextNodePtr;
 }
 
@@ -29,7 +29,7 @@ ItemType Node<ItemType>::getItem() const {
 }
 
 template<class ItemType>
-Node<ItemType> *Node<ItemType>::getNext() const {
+shared_ptr<Node<ItemType>> Node<ItemType>::getNext() const {
     return next;
 }
 

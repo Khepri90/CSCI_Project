@@ -14,11 +14,11 @@ template<class ItemType>
 class LinkedBag: public BagInterface<ItemType>{
 private:
     int itemCount;
-    Node<ItemType>* headPtr;
+    shared_ptr<Node<ItemType>> headPtr;
 
-    void fillVector(std::vector<ItemType>* bagContents, Node<ItemType>* curPtr) const;
-    int countFrequency(const ItemType& anEntry, int counter, Node<ItemType>* curPtr) const;
-    Node<ItemType>* getPointerTo(const ItemType& target, Node<ItemType>* curPtr) const;
+    void fillVector(std::vector<ItemType>* bagContents, shared_ptr<Node<ItemType>> curPtr) const;
+    int countFrequency(const ItemType& anEntry, int counter, shared_ptr<Node<ItemType>> curPtr) const;
+    shared_ptr<Node<ItemType>> getPointerTo(const ItemType& target, shared_ptr<Node<ItemType>> curPtr) const;
 
 public:
     explicit LinkedBag();
@@ -26,10 +26,10 @@ public:
     virtual ~LinkedBag();
 
     int getCurrentSize() const;
-    bool isEmpty() const = 0;
+    bool isEmpty() const;
     bool add(const ItemType& newEntry);
     bool remove(const ItemType& anEntry);
-    void clear() = 0;
+    void clear();
     int getFrequencyOf(const ItemType& anEntry) const;
     bool contains(const ItemType& anEntry) const;
     std::vector<ItemType> toVector() const;

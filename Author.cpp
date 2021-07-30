@@ -5,26 +5,28 @@
 #include "Author.h"
 
 
-Author::Author() {
+Author::Author(): Author("") {
 
 }
 
 
-Author::Author(string &aName) {
+Author::Author(const string &aName): name(aName) {
 
 }
 
 
-Author::~Author() {
-
-}
+Author::~Author() = default;
 
 
-string Author::getName() {
+ string Author::getName() const {
     return name;
 }
 
 
-void Author::setName(string& aName) {
+void Author::setName(const string& aName) {
     name = aName;
+}
+ostream& operator<<(ostream& out,  Author& anAuthor){
+out<<"  - "<<anAuthor.getName();
+return out;
 }

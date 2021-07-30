@@ -27,6 +27,7 @@ public:
     void setPhoneNumber(const string& aPhoneNum);
     friend ostream &operator<<(ostream &out, const Patron& aPatron);
 };
+#include "Patron.cpp"
 
 
 #endif //PROJECT_PATRON_H

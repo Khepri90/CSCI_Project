@@ -33,7 +33,7 @@ protected:
     //-----------------------------------------------------------------------------------------------------------------
     // Protected Utility Methods Section:   Recursive helper methods for the public methods.
     //-----------------------------------------------------------------------------------------------------------------
-    /**
+     /**
      * Recursively finds where the given node should be placed and inserts it in a leaf at that point.
      * @param subTreePtr
      * @param newNode
@@ -87,6 +87,8 @@ public:
     explicit BinarySearchTree(const ItemType &rootItem, shared_ptr<Comparator<ItemType>> aComparator);
 
     BinarySearchTree(const BinarySearchTree<ItemType> &tree);
+
+    BinarySearchTree();
 
     virtual ~BinarySearchTree();
 

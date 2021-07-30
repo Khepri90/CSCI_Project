@@ -8,7 +8,7 @@
 
 using namespace std;
 int displayMenu(){
-    cout << "=============================================================" << endl;
+   /* cout << "=============================================================" << endl;
     cout << "                   CSE LIBRARY MAIN MENU                " << endl;
     cout << "=============================================================" << endl;
     cout << "1) Book: Add " << endl;
@@ -41,20 +41,46 @@ int displayMenu(){
         }
         return choice;
     }
-
+    */
+   return 0;
 }
 
 void loadBookDatabase(shared_ptr<Library>&  myLibrary){
     cout <<"Loading initial Book data to Library"<<endl;
 
     myLibrary->addBook("Book1", "0001", "2000", "Pearson", "150");
+    cout<<endl<<"books added."<<endl;
+    myLibrary->addAuthor( "Author1");
+    cout<<"author added to list";
+    myLibrary->addAuthorToBook("Book1", "Author1");
+    cout<<endl<<"author added"<<endl;
     myLibrary->addBook("Book2", "0002", "2005", "Pearson", "345");
     myLibrary->addBook("Book3", "0003", "2010", "Pearson", "1170");
     myLibrary->addBook("Book4", "0004", "2015", "Pearson", "200");
     myLibrary->listAvailBooks();
+    cout<<endl;
+    myLibrary->addPatron("John", "Red st.", "111-222-3333");
+    myLibrary->addPatron("Ben", "Blue rd.", "444-555-6666");
+    myLibrary->listPatrons();
+/*
+    myLibrary->removeBook("Book3");
+    myLibrary->listAvailBooks();
+    cout<<endl;
+    myLibrary->checkout("111-222-3333", "Book1");
+    cout<<endl<<"checkedOut"<<endl;
+    //cout<<myLibrary->isCheckedOut("Book1");
+    //myLibrary->placeHold("444-555-6666", "Book1");
+    myLibrary->returnBook("Book1");
+    cout<<endl<<"Hold placed"<<endl;
+    //myLibrary->checkIn();*/
+    vector<shared_ptr<Book>> searchBook = myLibrary->search("Book");
 
+    if (searchBook.empty())
+        cout << "NO Matching book Found." << endl;
+    else {
+        cout << "Matching Movies" << endl;
 
-
+    }
 }
 
 
