@@ -1,10 +1,5 @@
-//
-// Created by dariu on 7/25/2021.
-//
-
 
 #include "Library.h"
-
 #include "regex"
 using namespace std;
 
@@ -22,10 +17,10 @@ Library::~Library() { //Default destructor
 
 }
 
-
-
-
-bool Library::removeBook(string title) { //remove available books from inventory
+/*
+ * Method to remove available books from the library. Takes in 'title' as argument.
+ */
+bool Library::removeBook(string title) {
     auto aBook = searchBookExact(title);
     if(isAvailable(title)) {
 
@@ -39,8 +34,9 @@ bool Library::removeBook(string title) { //remove available books from inventory
     }
         return false;
 }
-
-
+/*
+ * Method to add a patron to the Library. Takes in 'name', 'address', and 'phoneNum' as arguments.
+ */
 bool Library::addPatron(string name, string address, string phoneNum) {
     auto newPatron = make_shared<Patron>(name, address, phoneNum);
     return(this->patrons.insert(patrons.getLength() + 1, newPatron));
@@ -83,9 +79,9 @@ void Library::checkout(string phoneNum, string title) {
 
 
     if (canCheckout){
-        for (int i = 0; i < patrons->getLength(); i++){
-            if (patrons->getEntry(i)->getPhoneNumber()==phoneNum)
-                aBook->setPatron(patrons->getEntry(i));
+        for (int i = 1; i < patrons.getLength(); i++){
+            if (patrons.getEntry(i)->getPhoneNumber()==phoneNum)
+                aBook->setPatron(patrons.getEntry(i));
         }
         checkedBook.insert(books.getLength()+1, aBook);
         removeBook(title);
@@ -97,9 +93,9 @@ void Library::checkout(string phoneNum, string title) {
 void Library::placeHold(string title, string phoneNum) {
     auto aBook = searchBookExact(title);
     shared_ptr<Patron> aPatron = nullptr;
-    for (int i = 0; i < patrons->getLength(); i++){
-        if (patrons->getEntry(i)->getPhoneNumber()==phoneNum)
-             aPatron = patrons->getEntry(i);
+    for (int i = 1; i < patrons.getLength(); i++){
+        if (patrons.getEntry(i)->getPhoneNumber()==phoneNum)
+             aPatron = patrons.getEntry(i);
     }
     aBook->getHold().enqueue(aPatron);
 
@@ -161,13 +157,13 @@ void Library::listPatrons() {
          setw(10) << "Address" << " -- " <<
          setw(10) << "Phone Number" << " -- " << endl;
     cout << string(57, '=') << endl;
-    int length = patrons->getLength();
-    for(int i = 0; i < length; i++){
+
+    for(int i = 1; i <= patrons.getLength(); i++){
         cout << string(57, '=') << endl;
         cout <<
-             setw(10) << patrons->getEntry(i)->getName() << " -- " <<
-             setw(10) << patrons->getEntry(i)->getAddress()<< " -- " <<
-             setw(10) << patrons->getEntry(i)->getPhoneNumber() << " -- " << endl;
+             setw(10) << patrons.getEntry(i)->getName() << " -- " <<
+             setw(10) << patrons.getEntry(i)->getAddress()<< " -- " <<
+             setw(10) << patrons.getEntry(i)->getPhoneNumber() << " -- " << endl;
         cout << string(57, '=') << endl;
 
 

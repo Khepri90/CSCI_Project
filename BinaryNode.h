@@ -1,6 +1,3 @@
-//
-// Created by dariu on 7/25/2021.
-//
 
 #ifndef PROJECT_BINARYNODE_H
 #define PROJECT_BINARYNODE_H

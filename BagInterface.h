@@ -1,6 +1,4 @@
-//
-// Created by dariu on 7/25/2021.
-//
+
 
 #ifndef PROJECT_BAGINTERFACE_H
 #define PROJECT_BAGINTERFACE_H

@@ -1,6 +1,3 @@
-//
-// Created by dariu on 7/25/2021.
-//
 
 #ifndef PROJECT_AVLTREE_H
 #define PROJECT_AVLTREE_H

@@ -1,6 +1,3 @@
-//
-// Created by dariu on 7/25/2021.
-//
 
 #ifndef PROJECT_BINARYNODETREE_H
 #define PROJECT_BINARYNODETREE_H
